@@ -3,7 +3,6 @@ import OrderItem from "./order_item"
 export default class Order {
     private _id: string
     private _customerId: string
-    private _orderId: string
     private _items: OrderItem[]
 
     constructor(id: string, _customerId: string, items: OrderItem[]) {
