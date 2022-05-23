@@ -1,26 +1,28 @@
 // Entidade anêmica
 // DTO -> Data Transfer Object (transferir dados entre camadas)
+import Entity from "../../@shared/entity/entity.abstract"
+import NotificationError from "../../@shared/notification/notification.error"
+import CustomerYupValidatorFactory from "../validator/customer.yup.validator"
 import Address from "../value_object/address"
 
 
-export default class Customer {
-    private _id: string
+export default class Customer extends Entity {
     private _name: string
     private _address!: Address
     private _active: boolean = true
     private _rewardPoints: number = 0
 
     constructor(id: string, name: string) {
-        this._id = id
+        super(id);
         this._name = name
         this.validate()
     }
 
     validate() {
-        if (this._id === "")
-            throw new Error("Id is required")
-        if (this._name === "")
-            throw new Error("Name is required")
+        new CustomerYupValidatorFactory().validate(this)
+
+        if (this.notification.hasErrors())
+            throw new NotificationError(this.notification.errors)
     }
 
     changeName(name: string) {

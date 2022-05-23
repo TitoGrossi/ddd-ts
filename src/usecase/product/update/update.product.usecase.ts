@@ -10,11 +10,15 @@ export default class ProductUpateUseCase {
 
     async execute(input: InputUpdateProductDto): Promise<OutputUpdateProductDto> {
         const product = await this.productRepo.find(input.id);
-        product.changePrice(input.price)
-        product.changeName(input.name)
+        product.changePrice(input.price);
+        product.changeName(input.name);
 
         await this.productRepo.update(product);
 
-        return input;
+        return {
+            id: product.id,
+            name: product.name,
+            price: product.price,
+        };
     }
 }
