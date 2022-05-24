@@ -2,7 +2,7 @@
 // DTO -> Data Transfer Object (transferir dados entre camadas)
 import Entity from "../../@shared/entity/entity.abstract"
 import NotificationError from "../../@shared/notification/notification.error"
-import CustomerYupValidatorFactory from "../validator/customer.yup.validator"
+import CustomerValidatorFactory from "../factory/customer.validator.factory"
 import Address from "../value_object/address"
 
 
@@ -19,7 +19,7 @@ export default class Customer extends Entity {
     }
 
     validate() {
-        new CustomerYupValidatorFactory().validate(this)
+        new CustomerValidatorFactory().create().validate(this)
 
         if (this.notification.hasErrors())
             throw new NotificationError(this.notification.errors)
