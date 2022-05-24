@@ -18,7 +18,6 @@ export default class Product extends Entity implements ProductInterface {
 
     validate() {
         new ProductValidatorFactory().create().validate(this)
-        console.log("ERRO: ", this.notification.errors)
         if (this.notification.hasErrors())
             throw new NotificationError(this.notification.errors)
     }
